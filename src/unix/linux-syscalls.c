@@ -361,7 +361,7 @@ ssize_t uv__pwritev(int fd, const struct iovec *iov, int iovcnt, int64_t offset)
 
 
 int uv__dup3(int oldfd, int newfd, int flags) {
-#if defined(__NR_dup3)
+#if defined(__NR_dup3) && !defined(CLICKHOUSE_GLIBC_COMPATIBILITY)
   return syscall(__NR_dup3, oldfd, newfd, flags);
 #else
   return errno = ENOSYS, -1;
